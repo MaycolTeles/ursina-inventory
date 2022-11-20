@@ -2,7 +2,9 @@
 Module containing the 'Inventory' class.
 """
 
-from ursina import Entity, camera, color
+from typing import Any
+
+from ursina import Entity, Button, camera, color
 
 
 class Inventory(Entity):
@@ -33,3 +35,17 @@ class Inventory(Entity):
         }
 
         self.item_parent = Entity(**item_parent_args)
+
+    def append_item(self, item: str) -> None:
+        """
+        Method to append an item to inventory.
+        """
+        item_args: dict[str, Any] = {
+            "parent": self.item_parent,
+            "model": "quad",
+            "origin": (-.5, .5),
+            "color": color.random_color(),
+            "z": -.1
+        }
+
+        Button(**item_args)

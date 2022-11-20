@@ -21,7 +21,7 @@ class Item(Button):
         item_position = kwargs.get("position", (0, 0))
         item_origin = kwargs.get("origin", (-.5, .5))
 
-        item_args = {
+        item_args: dict[str, Any] = {
             "parent": item_parent,
             "position": item_position,
             "color": item_color,
