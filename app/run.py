@@ -5,6 +5,7 @@ Module to run the application.
 from ursina import Ursina
 
 from src.entities.inventory.inventory import Inventory
+from src.entities.inventory.add_item_button import AddItemButton
 
 
 def main() -> None:
@@ -13,9 +14,10 @@ def main() -> None:
     """
     app = Ursina()
     inventory = Inventory()
+    add_item_button = AddItemButton(inventory=inventory)
 
     for _ in range(7):
-        inventory.append_item("item_1")
+        add_item_button.add_item_to_inventory()
 
     app.run()
 

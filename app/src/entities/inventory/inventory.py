@@ -52,7 +52,7 @@ class Inventory(Entity):
 
         Button(**item_args)
 
-    def find_next_free_spot(self) -> Optional[tuple]:
+    def find_next_free_spot(self) -> Optional[tuple[int, int]]:
         """
         Method to find the inventory next free spot.
         """
@@ -62,3 +62,5 @@ class Inventory(Entity):
             for x in range(self.SIZE[0]):
                 if not (x, -y) in taken_spots:
                     return (x, -y)
+
+        print("NO MORE SPACE IN THE INVENTORY!")
