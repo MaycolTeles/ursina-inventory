@@ -5,7 +5,7 @@ Module to run the application.
 from ursina import Ursina
 
 from src.entities.inventory.inventory import Inventory
-from src.entities.inventory.add_item_button import AddItemButton
+from src.entities.items.add_item_button import AddItemButton
 
 
 def main() -> None:

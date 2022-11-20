@@ -7,8 +7,8 @@ from typing import Any
 
 from ursina import Button, color, Tooltip
 
-from .inventory import Inventory
-from ..items.item import Item
+from ..inventory.inventory import Inventory
+from .item import Item
 
 
 class AddItemButton(Button):
@@ -49,18 +49,13 @@ class AddItemButton(Button):
         """
         item_args: dict[str, Any] = {
             "parent": self.inventory.item_parent,
-            "model": "quad",
             "texture": item_type,
-            "color": color.white,
-            "origin": (-.5, .5),
             "position": self.inventory.find_next_free_spot(),
-            "z": -.1
         }
-
-        name = item_type.replace('_', ' ').title()
 
         item = Item(**item_args)
 
+        name = item_type.replace('_', ' ').title()
         item.tooltip = Tooltip(name)                                    
         item.tooltip.background.color = color.color(0,0,0,.8)           
 
