@@ -2,7 +2,7 @@
 Module containing the 'Inventory' class.
 """
 
-from ursina import Entity
+from ursina import Entity, camera, color
 
 
 class Inventory(Entity):
@@ -14,4 +14,15 @@ class Inventory(Entity):
         """
         Constructor.
         """
-        super().__init__()
+        inventory_args = {
+            "parent": camera.ui,
+            "model": "quad",
+            "scale": (.5, .8),
+            "origin": (-.5, .5),
+            "position": (-.3, .4),
+            "texture": "white_cube",
+            "texture_scale": (5, 8),
+            "color": color.dark_gray
+        }
+
+        super().__init__(**inventory_args)
