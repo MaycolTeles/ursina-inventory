@@ -51,12 +51,24 @@ class Item(Draggable):
         self.y = int(self.y)
 
         self._check_if_swap()
+        self._check_if_out_of_bounds()
+
+    def _check_if_out_of_bounds(self) -> None:
+        """
+        Private Method to check if the item is out of bounds
+        (i. e.: outside the inventory).
+        """
+        x_out_of_bounds = self.x < 0 or self.x >= 1
+        y_out_of_bounds = self.y <= -1 or self.y > 0
+
+        if x_out_of_bounds or y_out_of_bounds:
+            self.position = self.original_position
 
     def drag(self) -> None:
         """
-        Method to drag and swap the items.
+        Method to save the item original position.
         """
-        self.org_pos = (self.x, self.y)
+        self.original_position: tuple[int, int] = (self.x, self.y)
 
     def _check_if_swap(self) -> None:
         """
@@ -73,4 +85,4 @@ class Item(Draggable):
         """
         Method to swap the item.
         """
-        item.position = self.org_pos
+        item.position = self.original_position
