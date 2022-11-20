@@ -43,12 +43,20 @@ class Item(Draggable):
 
         self.item_parent = item_parent
 
+    def drag(self) -> None:
+        """
+        Method to save the item original position.
+        """
+        self.original_position: tuple[int, int] = (self.x, self.y)
+        self.z -= .05 # ensure the dragged item overlaps the rest
+
     def drop(self) -> None:
         """
         Method to round the item position on drop.
         """
         self.x = int(self.x)
         self.y = int(self.y)
+        self.z += .05
 
         self._check_if_swap()
         self._check_if_out_of_bounds()
@@ -64,21 +72,15 @@ class Item(Draggable):
         if x_out_of_bounds or y_out_of_bounds:
             self.position = self.original_position
 
-    def drag(self) -> None:
-        """
-        Method to save the item original position.
-        """
-        self.original_position: tuple[int, int] = (self.x, self.y)
-
     def _check_if_swap(self) -> None:
         """
         Private Method to check if there's a need to swap the item.
         """
         for item in self.item_parent.children:
-            if item == self:
-                continue
-
             if item.x == self.x and item.y == self.y:
+                if item == self:
+                    continue
+
                 self._swap(item)
 
     def _swap(self, item: Item) -> None:
