@@ -4,7 +4,7 @@ Module containing the 'Inventory' class.
 
 from typing import Any, Optional
 
-from ursina import Entity, Button, camera, color
+from ursina import Entity, Button, camera, color, Tooltip
 
 
 class Inventory(Entity):
@@ -44,13 +44,18 @@ class Inventory(Entity):
         item_args: dict[str, Any] = {
             "parent": self.item_parent,
             "model": "quad",
+            "texture": item,
+            "color": color.white,
             "origin": (-.5, .5),
-            "color": color.random_color(),
-            "z": -.1,
-            "position": self.find_next_free_spot()
+            "position": self.find_next_free_spot(),
+            "z": -.1
         }
 
-        Button(**item_args)
+        icon = Button(**item_args)
+
+        name = item.replace('_', ' ').title()
+        icon.tooltip = Tooltip(name)
+        icon.tooltip.background.color = color.color(0, 0, 0, .8)
 
     def find_next_free_spot(self) -> Optional[tuple[int, int]]:
         """
