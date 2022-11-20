@@ -14,8 +14,8 @@ def main() -> None:
     app = Ursina()
     inventory = Inventory()
 
-    inventory.append_item("item_1")
-    inventory.append_item("item_2")
+    for _ in range(7):
+        inventory.append_item("item_1")
 
     app.run()
 

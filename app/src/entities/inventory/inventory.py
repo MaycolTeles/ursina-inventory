@@ -2,7 +2,7 @@
 Module containing the 'Inventory' class.
 """
 
-from typing import Any
+from typing import Any, Optional
 
 from ursina import Entity, Button, camera, color
 
@@ -11,6 +11,7 @@ class Inventory(Entity):
     """
     Class to represent an Inventory.
     """
+    SIZE = (5, 8)
 
     def __init__(self) -> None:
         """
@@ -23,7 +24,7 @@ class Inventory(Entity):
             "origin": (-.5, .5),
             "position": (-.3, .4),
             "texture": "white_cube",
-            "texture_scale": (5, 8),
+            "texture_scale": self.SIZE,
             "color": color.dark_gray
         }
 
@@ -45,7 +46,19 @@ class Inventory(Entity):
             "model": "quad",
             "origin": (-.5, .5),
             "color": color.random_color(),
-            "z": -.1
+            "z": -.1,
+            "position": self.find_next_free_spot()
         }
 
         Button(**item_args)
+
+    def find_next_free_spot(self) -> Optional[tuple]:
+        """
+        Method to find the inventory next free spot.
+        """
+        taken_spots = [(int(item.x), int(item.y)) for item in self.item_parent.children]
+
+        for y in range(self.SIZE[1]):
+            for x in range(self.SIZE[0]):
+                if not (x, -y) in taken_spots:
+                    return (x, -y)
