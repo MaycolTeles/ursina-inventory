@@ -26,3 +26,10 @@ class Inventory(Entity):
         }
 
         super().__init__(**inventory_args)
+
+        item_parent_args = {
+            "parent": self,
+            "scale": (1/5, 1/8)
+        }
+
+        self.item_parent = Entity(**item_parent_args)

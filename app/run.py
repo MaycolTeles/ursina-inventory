@@ -2,9 +2,10 @@
 Module to run the application.
 """
 
-from ursina import Ursina
+from ursina import Ursina, color
 
 from src.entities.inventory.inventory import Inventory
+from src.entities.items.item import Item
 
 
 def main() -> None:
@@ -13,6 +14,9 @@ def main() -> None:
     """
     app = Ursina()
     inventory = Inventory()
+
+    item_1 = Item(parent=inventory.item_parent)
+    item_2 = Item(parent=inventory.item_parent, color=color.green, position=(2, 0))
 
     app.run()
 
