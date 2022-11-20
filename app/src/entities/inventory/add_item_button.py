@@ -8,6 +8,7 @@ from typing import Any
 from ursina import Button, color, Tooltip
 
 from .inventory import Inventory
+from ..items.item import Item
 
 
 class AddItemButton(Button):
@@ -34,7 +35,26 @@ class AddItemButton(Button):
 
     def add_item_to_inventory(self) -> None:
         """
-        Method to add the item into the inventory.
+        Private Method to add the item into the inventory.
         """
-        item_choices = ["bag", "bow_arrow", "gem", "orb", "sword"]
-        self.inventory.append_item(random.choice(item_choices))
+        item_types = ["bag", "bow_arrow", "gem", "orb", "sword"]
+        selected_item_type = random.choice(item_types)
+
+        item = self._get_item(selected_item_type)
+        self.inventory.append_item(item)
+
+    def _get_item(self, item_type: str) -> Item:
+        """
+        Private Method to get an item based on its type received as argument.
+        """
+        item_args: dict[str, Any] = {
+            "parent": self.inventory.item_parent,
+            "model": "quad",
+            "texture": item_type,
+            "color": color.white,
+            "origin": (-.5, .5),
+            "position": self.inventory.find_next_free_spot(),
+            "z": -.1
+        }
+
+        return Item(**item_args)

@@ -2,9 +2,11 @@
 Module containing the 'Inventory' class.
 """
 
-from typing import Any, Optional
+from typing import Optional
 
-from ursina import Entity, Button, camera, color, Tooltip
+from ursina import Entity, camera, color
+
+from ..items.item import Item
 
 
 class Inventory(Entity):
@@ -12,6 +14,7 @@ class Inventory(Entity):
     Class to represent an Inventory.
     """
     SIZE = (5, 8)
+    items: list[Item] = []
 
     def __init__(self) -> None:
         """
@@ -37,25 +40,11 @@ class Inventory(Entity):
 
         self.item_parent = Entity(**item_parent_args)
 
-    def append_item(self, item: str) -> None:
+    def append_item(self, item: Item) -> None:
         """
         Method to append an item to inventory.
         """
-        item_args: dict[str, Any] = {
-            "parent": self.item_parent,
-            "model": "quad",
-            "texture": item,
-            "color": color.white,
-            "origin": (-.5, .5),
-            "position": self.find_next_free_spot(),
-            "z": -.1
-        }
-
-        icon = Button(**item_args)
-
-        name = item.replace('_', ' ').title()
-        icon.tooltip = Tooltip(name)
-        icon.tooltip.background.color = color.color(0, 0, 0, .8)
+        self.items.append(item)
 
     def find_next_free_spot(self) -> Optional[tuple[int, int]]:
         """
