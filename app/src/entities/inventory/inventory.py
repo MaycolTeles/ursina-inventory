@@ -6,15 +6,12 @@ from typing import Optional
 
 from ursina import Entity, camera, color
 
-from ..items.item import Item
-
 
 class Inventory(Entity):
     """
     Class to represent an Inventory.
     """
     SIZE = (5, 8)
-    items: list[Item] = []
 
     def __init__(self) -> None:
         """

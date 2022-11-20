@@ -2,6 +2,7 @@
 Module containing the 'Item' class.
 """
 
+from __future__ import annotations
 from typing import Any
 
 from ursina import Draggable, color, camera, Tooltip
@@ -40,9 +41,36 @@ class Item(Draggable):
         self.tooltip = Tooltip(name)
         self.tooltip.background.color = color.color(0,0,0,.8)
 
+        self.item_parent = item_parent
+
     def drop(self) -> None:
         """
         Method to round the item position on drop.
         """
         self.x = int(self.x)
         self.y = int(self.y)
+
+        self._check_if_swap()
+
+    def drag(self) -> None:
+        """
+        Method to drag and swap the items.
+        """
+        self.org_pos = (self.x, self.y)
+
+    def _check_if_swap(self) -> None:
+        """
+        Private Method to check if there's a need to swap the item.
+        """
+        for item in self.item_parent.children:
+            if item == self:
+                continue
+
+            if item.x == self.x and item.y == self.y:
+                self._swap(item)
+
+    def _swap(self, item: Item) -> None:
+        """
+        Method to swap the item.
+        """
+        item.position = self.org_pos
