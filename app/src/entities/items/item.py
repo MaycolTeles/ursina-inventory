@@ -4,7 +4,7 @@ Module containing the 'Item' class.
 
 from typing import Any
 
-from ursina import Draggable, color, camera
+from ursina import Draggable, color, camera, Tooltip
 
 
 class Item(Draggable):
@@ -35,3 +35,14 @@ class Item(Draggable):
         }
 
         super().__init__(**item_args)
+
+        name = item_texture.replace('_', ' ').title()
+        self.tooltip = Tooltip(name)
+        self.tooltip.background.color = color.color(0,0,0,.8)
+
+    def drop(self) -> None:
+        """
+        Method to round the item position on drop.
+        """
+        self.x = int(self.x)
+        self.y = int(self.y)

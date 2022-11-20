@@ -33,18 +33,18 @@ class Inventory(Entity):
 
         super().__init__(**inventory_args)
 
+        self._create_parent()
+
+    def _create_parent(self) -> None:
+        """
+        Private Method to create the parent.
+        """
         item_parent_args = {
             "parent": self,
             "scale": (1/5, 1/8)
         }
 
         self.item_parent = Entity(**item_parent_args)
-
-    def append_item(self, item: Item) -> None:
-        """
-        Method to append an item to inventory.
-        """
-        self.items.append(item)
 
     def find_next_free_spot(self) -> Optional[tuple[int, int]]:
         """

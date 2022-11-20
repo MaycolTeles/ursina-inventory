@@ -40,12 +40,11 @@ class AddItemButton(Button):
         item_types = ["bag", "bow_arrow", "gem", "orb", "sword"]
         selected_item_type = random.choice(item_types)
 
-        item = self._get_item(selected_item_type)
-        self.inventory.append_item(item)
+        self._create_item(selected_item_type)
 
-    def _get_item(self, item_type: str) -> Item:
+    def _create_item(self, item_type: str) -> None:
         """
-        Private Method to get an item based on its type received as argument.
+        Private Method to create an item based on its type received as argument.
         """
         item_args: dict[str, Any] = {
             "parent": self.inventory.item_parent,
@@ -53,10 +52,4 @@ class AddItemButton(Button):
             "position": self.inventory.find_next_free_spot(),
         }
 
-        item = Item(**item_args)
-
-        name = item_type.replace('_', ' ').title()
-        item.tooltip = Tooltip(name)                                    
-        item.tooltip.background.color = color.color(0,0,0,.8)           
-
-        return item
+        Item(**item_args)
