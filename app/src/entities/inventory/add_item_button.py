@@ -57,4 +57,11 @@ class AddItemButton(Button):
             "z": -.1
         }
 
-        return Item(**item_args)
+        name = item_type.replace('_', ' ').title()
+
+        item = Item(**item_args)
+
+        item.tooltip = Tooltip(name)                                    
+        item.tooltip.background.color = color.color(0,0,0,.8)           
+
+        return item
