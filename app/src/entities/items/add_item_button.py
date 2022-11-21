@@ -46,10 +46,15 @@ class AddItemButton(Button):
         """
         Private Method to create an item based on its type received as argument.
         """
+        item_position = self.inventory.find_next_free_spot()
+
+        if not item_position:
+            return
+
         item_args: dict[str, Any] = {
             "parent": self.inventory.item_parent,
             "texture": item_type,
-            "position": self.inventory.find_next_free_spot(),
+            "position": item_position
         }
 
         item = Item(**item_args)

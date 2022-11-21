@@ -54,7 +54,7 @@ class Inventory(Entity):
                 if not (x, -y) in taken_spots:
                     return (x, -y)
 
-        self._display_error_message("Impossible to add another item in the Inventory: Inventory is full")
+        self._display_error_message("Inventory is full")
 
     def _display_error_message(self, error_message: str) -> None:
         """
