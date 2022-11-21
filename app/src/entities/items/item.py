@@ -3,6 +3,7 @@ Module containing the 'Item' class.
 """
 
 from __future__ import annotations
+import random
 from typing import Any
 
 from ursina import Draggable, color, camera, Tooltip
@@ -36,9 +37,14 @@ class Item(Draggable):
         }
 
         super().__init__(**item_args)
+        self.name = item_texture.replace('_', ' ').title()
 
-        name = item_texture.replace('_', ' ').title()
-        self.tooltip = Tooltip(name)
+        item_should_be_legendary = self._should_item_be_legendary()
+
+        if item_should_be_legendary:
+            self._set_item_to_legendary()
+
+        self.tooltip = Tooltip(self.name)
         self.tooltip.background.color = color.color(0,0,0,.8)
 
         self.item_parent = item_parent
@@ -88,3 +94,17 @@ class Item(Draggable):
         Method to swap the item.
         """
         item.position = self.original_position
+
+    def _should_item_be_legendary(self) -> bool:
+        """
+        Private Method to check if the item should be a legendary item,
+        based on a chance of 10%.
+        """
+        return random.random() < .10
+
+    def _set_item_to_legendary(self) -> None:
+        """
+        Method to change the item received as argument to a legendary item.
+        """
+        self.color = color.gold
+        self.name = "<orange>Legendary " + self.name

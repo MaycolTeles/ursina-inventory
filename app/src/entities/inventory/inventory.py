@@ -4,7 +4,7 @@ Module containing the 'Inventory' class.
 
 from typing import Optional
 
-from ursina import Entity, camera, color
+from ursina import Entity, camera, color, destroy, Text
 
 
 class Inventory(Entity):
@@ -54,4 +54,18 @@ class Inventory(Entity):
                 if not (x, -y) in taken_spots:
                     return (x, -y)
 
-        print("NO MORE SPACE IN THE INVENTORY!")
+        self._display_error_message("Impossible to add another item in the Inventory: Inventory is full")
+
+    def _display_error_message(self, error_message: str) -> None:
+        """
+        Method to display an error message.
+        """
+        error_text = Text(
+            text=f"<red>{error_message}",
+            parent=camera.ui,
+            origin=(0,-1.5),
+            x=-.5,
+            scale=2
+        )
+
+        destroy(error_text, delay=1)

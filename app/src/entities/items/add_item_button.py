@@ -52,4 +52,4 @@ class AddItemButton(Button):
             "position": self.inventory.find_next_free_spot(),
         }
 
-        Item(**item_args)
+        item = Item(**item_args)
